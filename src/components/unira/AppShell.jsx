@@ -27,7 +27,7 @@ export default function AppShell() {
   return (
     <div className="min-h-screen md:flex">
       <aside className="hidden md:flex w-[216px] shrink-0 flex-col border-r border-border bg-white p-4 sticky top-0 h-screen">
-        <Logo className="mb-8 px-2" />
+        <Logo compact className="mb-8 px-2" />
         <nav className="flex flex-col gap-1">
           {LATERAL.map(({ to, label, Icon }) => (
             <Link key={to} to={to} className={`min-h-[44px] px-3 rounded-xl flex items-center gap-3 font-medium ${activo(to) ? "bg-[#FDE8F0] text-[#C8004F]" : "hover:bg-muted"}`}>
