@@ -8,6 +8,12 @@ No necesitas saber qué buscar: Unira entiende tu situación, te muestra a qué 
 
 ---
 
+## 🎬 Video pitch
+
+[▶️ Ver el video pitch de Unira](media/video-pitch.mp4)
+
+---
+
 ## El problema
 
 La desigualdad de oportunidades no depende solo de que existan programas. También hay una brecha de **información, acceso digital, orientación y tiempo**. Muchas personas:
