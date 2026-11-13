@@ -27,6 +27,13 @@ function Explorar() {
   const [q, setQ] = useState("");
   const [items, setItems] = useState(null);
 
+  // Si llegas desde el menú (Becas, Cursos, Extranjero…), los filtros se actualizan solos.
+  useEffect(() => {
+    setTipo(search.tipo || "");
+    setNivel(search.nivel || "");
+    setAlcance(search.alcance || "");
+  }, [search.tipo, search.nivel, search.alcance]);
+
   useEffect(() => {
     setItems(null);
     const f = { activa: true };
