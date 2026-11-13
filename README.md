@@ -1,40 +1,102 @@
-# Base44 App — TanStack Start
+# Unira
 
-A full-stack Base44 app: [TanStack Start](https://tanstack.com/start) (React 19, plain JavaScript) with file-based routes, server functions and server routes, server-rendered and hosted by Base44.
+**Las oportunidades existen. Encuentra las tuyas.**
 
-## What is in the starter
+Unira es una plataforma web gratuita, impulsada por inteligencia artificial, que ayuda a personas en México a **descubrir, entender y aprovechar** becas, apoyos, empleos, prácticas, cursos, concursos y programas de emprendimiento.
 
-| Route | File |
+No necesitas saber qué buscar: Unira entiende tu situación, te muestra a qué puedes aplicar y te acompaña para preparar una postulación de calidad. **Tú revisas y tú envías.**
+
+---
+
+## El problema
+
+La desigualdad de oportunidades no depende solo de que existan programas. También hay una brecha de **información, acceso digital, orientación y tiempo**. Muchas personas:
+
+- no se enteran de que una beca o convocatoria existe,
+- no saben si cumplen los requisitos,
+- o abandonan el trámite porque no saben preparar un CV, una carta de motivación o una solicitud.
+
+## La solución
+
+Unira funciona como un **orientador digital gratuito**:
+
+1. **Cuéntanos sobre ti**: un quiz corto (3–5 min) para conocer tu situación, ubicación, etapa educativa o laboral e intereses.
+2. **Descubre opciones**: recomendaciones de convocatorias verificadas con elegibilidad, fecha límite, costo, fuente y enlace oficial.
+3. **Prepárate**: un agente de IA te ayuda a armar un CV a la medida de cada convocatoria, cartas de motivación y listas de requisitos.
+4. **Postúlate**: das seguimiento a tus postulaciones, fechas importantes y próximos pasos.
+
+Unira no sustituye la decisión de las instituciones ni garantiza la aceptación: mejora la preparación y el acceso.
+
+## ¿Para quién es?
+
+| Segmento | Qué encuentra en Unira |
 | --- | --- |
-| `/` | `src/routes/index.jsx` — a server-rendered page whose loader calls a server function |
-| `GET /api/time` | `src/routes/api/time.js` — a server route: a raw HTTP endpoint next to the pages |
+| Familias con hijos en primaria | Becas y apoyos escolares filtrados por estado, tipo de escuela y requisitos |
+| Adolescentes y jóvenes | Becas, orientación vocacional, concursos y cursos |
+| Universitarios y recién egresados | Prácticas, intercambios, empleo inicial, becas y optimización de CV |
+| Adultos en transición laboral | Vacantes, CV guiado, capacitación y preparación de entrevistas |
+| Personas emprendedoras | Convocatorias, cursos, mentorías y apoyos de emprendimiento |
 
-## Run locally
+## Funciones principales
+
+- **Motor de oportunidades**: convocatorias curadas, clasificadas y con fecha de verificación.
+- **Recomendaciones explicables**: cada resultado muestra *por qué* te conviene (elegibilidad, intereses, ubicación y fecha).
+- **CV inteligente**: CV limpio y compatible con ATS, adaptado a cada convocatoria sin inventar datos.
+- **Asistente de solicitudes**: cartas de motivación y checklists de requisitos.
+- **Mi guía**: acompañamiento paso a paso con IA durante la postulación.
+- **Seguimiento**: panel de postulaciones, favoritos y fechas límite.
+- **Accesibilidad**: lenguaje sencillo, diseño móvil primero y experiencia ligera.
+- **Confianza**: fuentes oficiales, página de ayuda contra fraudes y política de privacidad clara.
+
+## Impacto que buscamos
+
+| Indicador | Qué mide |
+| --- | --- |
+| Descubrimiento | Usuarios que encuentran al menos una oportunidad pertinente |
+| Calidad de matching | Porcentaje de resultados elegibles y útiles |
+| Preparación | CV creados, cartas generadas y checklists completadas |
+| Conversión | Postulaciones realizadas y aceptaciones reportadas |
+| Equidad y acceso | Uso por segmento, dispositivo y región |
+
+## Principios y salvaguardas
+
+- **Información verificada**: cada ficha muestra fuente, fecha de consulta y vigencia.
+- **Privacidad**: solo pedimos los datos indispensables y con consentimiento.
+- **Sin promesas falsas**: la IA ayuda a prepararte, no asegura una beca ni un empleo.
+- **Contra el fraude**: señalamos cobros sospechosos y nunca pedimos contraseñas.
+- **No discriminación**: recomendaciones auditables y sin excluir por características protegidas.
+
+## Modelo de sostenibilidad
+
+- **Gratis para las personas** (B2C): búsqueda, orientación y herramientas esenciales siempre sin costo.
+- **Alianzas** (B2B): universidades, fundaciones, empresas y gobierno pueden difundir convocatorias, sin vender datos personales ni alterar el orden de los resultados.
+
+## Tecnología
+
+- React 19 + [TanStack Start](https://tanstack.com/start) (rutas por archivos, SSR y funciones de servidor)
+- Tailwind CSS + componentes UI
+- Vite
+- Agente de IA para recomendaciones, CV y cartas
+
+### Estructura
+
+```
+src/
+├── routes/            # Páginas: inicio, quiz, explorar, convocatoria, padres, fuentes, contacto…
+│   └── _authed/       # Área personal: para ti, mi guía, mi currículum, postulaciones, perfil
+├── components/unira/  # Componentes de la interfaz de Unira
+└── lib/               # Lógica de convocatorias, postulaciones, IA y autenticación
+```
+
+### Correr localmente
 
 ```bash
 npm ci
-base44 login   # one-time per machine
-base44 link    # one-time per clone
-base44 dev     # local backend + app together
+npm run dev
 ```
 
-## Build and publish
+## Equipo
 
-```bash
-npm run build         # -> dist/client (assets) + dist/server (the Worker)
-base44 deploy         # or publish from the Base44 builder
-```
+Proyecto desarrollado en México para reducir la brecha de oportunidades, presentado en un hackathon de impacto social (noviembre 2026).
 
-There is no `index.html`: the HTML document is rendered on the server from `src/routes/__root.jsx`. The build runs through the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), so dev and build both execute server code in `workerd`.
-
-## How the pieces fit
-
-- **Pages** are files in `src/routes/`. A route's `loader` runs on the server for a document request and in the browser for a client navigation; `Route.useLoaderData()` gives the component the resolved data.
-- **Server functions** (`src/lib/server-fns.js`) are RPCs created with `createServerFn`. `src/start.js` runs every one of them through `authMiddleware`, which sends the visitor's token along, so `context.getBase44()` returns a client acting as that visitor and entity access rules apply. `context.getBase44().asServiceRole` bypasses them, so use it only after authenticating the caller (`.middleware([requireUser])`) and checking they may access the records involved: server functions and server routes are public endpoints anyone can call with any input. See **Server Security** in `AGENTS.md`. Call it only in handlers that need Base44: it reads the platform headers, and a handler that never calls it works without them.
-- **Secrets** are read in server code with `import { secrets } from "base44:runtime"` → `secrets.get("NAME")`, inside a handler. Never `process.env`.
-- **Server routes** (`src/routes/api/*.js`) are raw HTTP endpoints for URLs something other than the app's own code requests (webhooks, downloads, feeds); the app's pages call server functions. `src/start.js` runs every request through `base44RequestMiddleware`, so their `server.handlers` receive the same `context.getBase44()` (`({ request, params, context }) => …`).
-- **Server-only code** lives in `*.server.js` files (TanStack refuses to bundle them for the browser).
-- **Auth** is resolved client-side after hydration (`useAuth()`); the server is anonymous on a document request, so give per-user pages `ssr: false`.
-- **Sign-in and gated pages** are not wired in the starter: `src/components/auth/` holds the pages (login, register, password reset, MCP consent) and a login gate for `src/routes/_authed/`, to add when the app needs them. See **Adding Authentication** in `AGENTS.md`.
-- **AI**: TanStack AI is installed and runs on the Base44 AI gateway, with no API key and usage billed to the app's AI credits. `gatewayModel(context.getBase44())` in `src/lib/ai.server.js` builds the adapter; `AGENTS.md` has a streaming chat example (a server route plus `useChat`).
-- **Caching**: the platform caches only what a route opts into via `headers()` (`Cache-Control: public, s-maxage=…`). Everything else is served fresh.
+> *Queremos que el acceso a las oportunidades no dependa de saber dónde buscar.*
