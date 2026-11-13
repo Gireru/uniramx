@@ -17,10 +17,10 @@ export default function Hero() {
             Gratis · para jóvenes de todos los sectores
           </motion.span>
           <motion.h1 {...sube} transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }} className="font-serif-cond text-[34px] leading-[38px] sm:text-[44px] sm:leading-[46px] md:text-[64px] md:leading-[66px] text-foreground mt-4">
-            Hay muchas oportunidades para crecer, encuentra <span className="text-gradient">la tuya</span>
+            Tu plataforma de <span className="text-gradient">oportunidades</span>
           </motion.h1>
           <motion.p {...sube} transition={{ duration: 0.5, delay: 0.16 }} className="mt-4 text-base sm:text-lg text-muted-foreground">
-            Becas, cursos, concursos, empleo, prácticas e intercambios. Tu guía con IA te acompaña en toda la postulación.
+            No importa dónde estés ni de dónde vengas: aquí tienes becas, cursos, empleos, prácticas e intercambios, y una guía con IA que te acompaña paso a paso para que alcances tus sueños.
           </motion.p>
           <motion.div {...sube} transition={{ duration: 0.5, delay: 0.24 }} className="mt-7 flex flex-wrap gap-3">
             <Link to="/quiz" className="h-12 px-7 rounded-full bg-primary text-primary-foreground font-bold inline-flex items-center gap-2 hover:scale-[1.04] active:scale-95 transition-transform shadow-[0_10px_24px_rgba(230,0,92,.28)]">
