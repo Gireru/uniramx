@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import Logo from "@/components/unira/Logo";
 import MiGuia from "@/components/unira/MiGuia";
 import Campo from "@/components/unira/Campo";
@@ -57,7 +57,7 @@ function Quiz() {
   const terminar = async () => {
     if (!isAuthenticated) return navigateToLogin();
     setGuardando(true);
-    await base44.entities.Perfil.create({
+    await api.entities.Perfil.create({
       tipo_cuenta: r.para === "yo" ? "estudiante" : r.para === "menor" ? "tutor" : "adulto",
       nombre_preferido: r.nombre || "Estudiante",
       es_menor: r.para === "menor",

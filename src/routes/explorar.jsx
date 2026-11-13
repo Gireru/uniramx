@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import PublicHeader from "@/components/unira/PublicHeader";
 import Footer from "@/components/unira/Footer";
 import ConvCard from "@/components/unira/ConvCard";
@@ -44,7 +44,7 @@ function Explorar() {
     if (alcance) f.alcance = alcance;
     if (abiertas) f.vigencia = { $in: ["vigente", "permanente"] };
     if (q.trim()) f.titulo = { $regex: q.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" };
-    const t = setTimeout(() => base44.entities.Convocatoria.filter(f, { sort: "-created_date", limit: 60 }).then((p) => setItems(p.items)), 250);
+    const t = setTimeout(() => api.entities.Convocatoria.filter(f, { sort: "-created_date", limit: 60 }).then((p) => setItems(p.items)), 250);
     return () => clearTimeout(t);
   }, [tipo, nivel, estado, alcance, abiertas, q, demo]);
 

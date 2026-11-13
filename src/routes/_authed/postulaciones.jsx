@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import PostulacionRow from "@/components/unira/PostulacionRow";
 
 export const Route = createFileRoute("/_authed/postulaciones")({
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_authed/postulaciones")({
 
 function Postulaciones() {
   const [lista, setLista] = useState(null);
-  useEffect(() => { base44.entities.Postulacion.list("-updated_date", 50).then((p) => setLista(p.items)); }, []);
+  useEffect(() => { api.entities.Postulacion.list("-updated_date", 50).then((p) => setLista(p.items)); }, []);
   return (
     <div className="p-4 md:p-10 max-w-3xl">
       <h1 className="font-serif-cond text-3xl md:text-6xl">Mis postulaciones</h1>

@@ -1,4 +1,4 @@
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 
 export const TIPO = { beca: "Beca", apoyo: "Apoyo", curso: "Curso", concurso: "Concurso", empleo: "Empleo", practica: "Práctica", intercambio: "Intercambio" };
 export const ALCANCE = { mexico: "En México", internacional: "En el extranjero" };
@@ -23,6 +23,6 @@ export const estaAbierta = (c) => ["vigente", "permanente"].includes(c.vigencia)
 
 export async function listarConvocatorias(demo, limit = 100) {
   const q = demo ? { activa: true } : { activa: true, demo: false };
-  const page = await base44.entities.Convocatoria.filter(q, { sort: "-created_date", limit });
+  const page = await api.entities.Convocatoria.filter(q, { sort: "-created_date", limit });
   return page.items;
 }

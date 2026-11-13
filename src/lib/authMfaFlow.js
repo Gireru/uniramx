@@ -1,4 +1,4 @@
-import { base44 } from '@/api/base44Client';
+import { api } from "@/api/client";
 import { getAppParams } from '@/lib/app-params';
 
 const appId = () => getAppParams().appId;
@@ -49,7 +49,7 @@ export function mfaSession(challenge) {
   const call = async (suffix, body, method) => {
     const result = await request(`mfa/${suffix}`, { method, body, token: credential });
     if (result.mfa_management_token) credential = result.mfa_management_token;
-    if (result.access_token) base44.auth.setToken(result.access_token);
+    if (result.access_token) api.auth.setToken(result.access_token);
     return result;
   };
   return {
@@ -89,7 +89,7 @@ export function resumeMfa() {
     const rest = params.toString();
     window.history.replaceState(null, '', `${window.location.pathname}${rest ? `?${rest}` : ''}`);
     const result = await request('mfa/exchange', { body: { code, code_verifier: verifier } });
-    if (result.access_token) base44.auth.setToken(result.access_token);
+    if (result.access_token) api.auth.setToken(result.access_token);
     return result;
   })();
   return resumed;
@@ -108,9 +108,9 @@ export async function loadSignInOptions() {
 // factor management. Returns to this app's /mfa page when MFA is needed.
 export async function signInWithProvider(provider, returnTo, { manage = false } = {}) {
   const info = await loadSignInOptions();
-  // Enterprise SSO sign-in is exempt from Base44 MFA; only managing factors asks for it.
+  // Enterprise SSO sign-in is exempt from platform MFA; only managing factors asks for it.
   if (!manage && (info.auth_config?.mfa_policy !== 'required' || provider === 'sso')) {
-    return base44.auth.loginWithProvider(provider, returnTo);
+    return api.auth.loginWithProvider(provider, returnTo);
   }
   if (isInAppBrowser()) {
     // In-app browsers hand sign-in to the system browser through the platform's MFA page.

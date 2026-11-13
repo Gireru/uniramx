@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import { Check } from "lucide-react";
 
 const MOTIVOS = [
@@ -28,7 +28,7 @@ export default function ContactForm() {
     setError("");
     setEnviando(true);
     try {
-      await base44.entities.MensajeContacto.create({
+      await api.entities.MensajeContacto.create({
         nombre: f.nombre.trim(),
         correo: f.correo.trim(),
         motivo: f.motivo,

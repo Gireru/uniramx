@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import { obtenerPerfil } from "@/lib/postulaciones";
 import { useAuth } from "@/lib/AuthContext";
 import { Switch } from "@/components/ui/switch";
@@ -19,7 +19,7 @@ function Perfil() {
   useEffect(() => { obtenerPerfil().then(setP); }, []);
 
   const exportar = async () => {
-    const [po, g] = await Promise.all([base44.entities.Postulacion.list("-created_date", 200), base44.entities.Guardado.list("-created_date", 200)]);
+    const [po, g] = await Promise.all([api.entities.Postulacion.list("-created_date", 200), api.entities.Guardado.list("-created_date", 200)]);
     const blob = new Blob([JSON.stringify({ perfil: p, postulaciones: po.items, guardados: g.items }, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
@@ -28,20 +28,20 @@ function Perfil() {
   };
   const borrar = async () => {
     if (!window.confirm("Se borrarán tu perfil y tus postulaciones. ¿Continuar?")) return;
-    const [po, g] = await Promise.all([base44.entities.Postulacion.list("-created_date", 200), base44.entities.Guardado.list("-created_date", 200)]);
+    const [po, g] = await Promise.all([api.entities.Postulacion.list("-created_date", 200), api.entities.Guardado.list("-created_date", 200)]);
     for (const x of po.items) {
-      const ts = await base44.entities.TareaGuia.filter({ postulacion_id: x.id }, { limit: 100 });
-      for (const t of ts.items) await base44.entities.TareaGuia.delete(t.id);
-      const bs = await base44.entities.Borrador.filter({ postulacion_id: x.id }, { limit: 20 });
-      for (const b of bs.items) await base44.entities.Borrador.delete(b.id);
-      await base44.entities.Postulacion.delete(x.id);
+      const ts = await api.entities.TareaGuia.filter({ postulacion_id: x.id }, { limit: 100 });
+      for (const t of ts.items) await api.entities.TareaGuia.delete(t.id);
+      const bs = await api.entities.Borrador.filter({ postulacion_id: x.id }, { limit: 20 });
+      for (const b of bs.items) await api.entities.Borrador.delete(b.id);
+      await api.entities.Postulacion.delete(x.id);
     }
-    for (const x of g.items) await base44.entities.Guardado.delete(x.id);
-    if (p) await base44.entities.Perfil.delete(p.id);
+    for (const x of g.items) await api.entities.Guardado.delete(x.id);
+    if (p) await api.entities.Perfil.delete(p.id);
     toast.success("Tus datos fueron borrados");
     setP(null);
   };
-  const alertas = async (v) => { await base44.entities.Perfil.update(p.id, { consentimiento_alertas: v }); setP({ ...p, consentimiento_alertas: v }); };
+  const alertas = async (v) => { await api.entities.Perfil.update(p.id, { consentimiento_alertas: v }); setP({ ...p, consentimiento_alertas: v }); };
 
   if (p === undefined) return <div className="p-10"><div className="h-40 bg-white rounded-[20px] animate-pulse" /></div>;
   if (p === null) return <div className="p-10"><p>Aún no tienes perfil.</p><Link to="/quiz" className="mt-4 inline-flex h-12 px-6 items-center rounded-full bg-primary text-white font-bold">Haz el quiz</Link></div>;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import MiGuia from "@/components/unira/MiGuia";
 import { calcularPreparacion } from "@/lib/match";
 
@@ -12,8 +12,8 @@ export default function ListoTab({ po, c, tareas, onChange }) {
   const [pregunta, setPregunta] = useState(false);
 
   useEffect(() => {
-    base44.entities.Borrador.filter({ postulacion_id: po.id }, { limit: 1 }).then((r) => setBorrador(r.items[0] || null));
-    base44.entities.Perfil.filter({ id: po.perfil_id }, { limit: 1 }).then((r) => setPerfil(r.items[0] || null));
+    api.entities.Borrador.filter({ postulacion_id: po.id }, { limit: 1 }).then((r) => setBorrador(r.items[0] || null));
+    api.entities.Perfil.filter({ id: po.perfil_id }, { limit: 1 }).then((r) => setPerfil(r.items[0] || null));
   }, [po.id]);
 
   const prep = calcularPreparacion({ tareas, borrador, etapa: po.etapa === "descubierta" ? "redactando" : po.etapa, esMenor: perfil?.es_menor, tutorAprobo: po.tutor_aprobo, convocatoria: c });
@@ -22,12 +22,12 @@ export default function ListoTab({ po, c, tareas, onChange }) {
   useEffect(() => {
     if (borrador === null && !perfil) return;
     if (prepReal.indice !== (po.indice_preparacion || 0)) {
-      base44.entities.Postulacion.update(po.id, { indice_preparacion: prepReal.indice }).then(onChange);
+      api.entities.Postulacion.update(po.id, { indice_preparacion: prepReal.indice }).then(onChange);
     }
   }, [prepReal.indice, borrador, perfil]);
   const listo = ["lista_para_enviar", "enviada", "seguimiento", "resultado_registrado"].includes(po.etapa);
 
-  const upd = async (d) => { await base44.entities.Postulacion.update(po.id, d); onChange(); };
+  const upd = async (d) => { await api.entities.Postulacion.update(po.id, d); onChange(); };
   const revisar = () => upd({ etapa: "revision_final", indice_preparacion: calcularPreparacion({ tareas, borrador, etapa: "revision_final", esMenor: perfil?.es_menor, tutorAprobo: po.tutor_aprobo, convocatoria: c }).indice });
   const pasarListo = () => {
     // La puerta se valida de nuevo aquí: en menores nada avanza sin tutor_aprobo.

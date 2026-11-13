@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import confetti from "canvas-confetti";
 import { toast } from "sonner";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import MiGuia from "@/components/unira/MiGuia";
 import Campo from "@/components/unira/Campo";
 import { generarBorrador } from "@/lib/server-fns";
@@ -24,7 +24,7 @@ export default function CartaTab({ po, onChange }) {
   const gen = useServerFn(generarBorrador);
 
   const cargar = async () => {
-    const r = await base44.entities.Borrador.filter({ postulacion_id: po.id }, { limit: 1 });
+    const r = await api.entities.Borrador.filter({ postulacion_id: po.id }, { limit: 1 });
     setB(r.items[0] || null);
     setTexto(r.items[0]?.texto || "");
   };
@@ -33,21 +33,21 @@ export default function CartaTab({ po, onChange }) {
   const crear = async () => {
     setCargando(true);
     const hechos = PREGUNTAS.map((q, i) => ({ id: `h${i + 1}`, pregunta: q, respuesta: resp[i] })).filter((h) => h.respuesta.trim());
-    const nuevo = b || (await base44.entities.Borrador.create({ postulacion_id: po.id, tipo: "carta_motivacion", hechos_aportados: hechos, version: 0 }));
-    if (b) await base44.entities.Borrador.update(b.id, { hechos_aportados: hechos });
+    const nuevo = b || (await api.entities.Borrador.create({ postulacion_id: po.id, tipo: "carta_motivacion", hechos_aportados: hechos, version: 0 }));
+    if (b) await api.entities.Borrador.update(b.id, { hechos_aportados: hechos });
     await gen({ data: { borrador_id: nuevo.id } });
-    await base44.entities.Postulacion.update(po.id, { etapa: "redactando", siguiente_accion: "Tu carta está lista para revisar" });
+    await api.entities.Postulacion.update(po.id, { etapa: "redactando", siguiente_accion: "Tu carta está lista para revisar" });
     await cargar();
     onChange();
     setCargando(false);
   };
-  const guardar = async () => { await base44.entities.Borrador.update(b.id, { texto, version: (b.version || 1) + 1, aprobado_por_usuario: false }); setEdit(false); cargar(); };
+  const guardar = async () => { await api.entities.Borrador.update(b.id, { texto, version: (b.version || 1) + 1, aprobado_por_usuario: false }); setEdit(false); cargar(); };
   const aprobar = async (ev) => {
-    await base44.entities.Borrador.update(b.id, { aprobado_por_usuario: true, estado: "final" });
+    await api.entities.Borrador.update(b.id, { aprobado_por_usuario: true, estado: "final" });
     const r = ev.currentTarget.getBoundingClientRect();
     confetti({ particleCount: 60, spread: 55, colors: ["#E6005C", "#2B4BFF", "#FFFFFF", "#FFC83D"], disableForReducedMotion: true, origin: { x: (r.left + r.width / 2) / window.innerWidth, y: r.top / window.innerHeight } });
-    const ts = await base44.entities.TareaGuia.filter({ postulacion_id: po.id, tipo: "escrito" }, { limit: 5 });
-    for (const t of ts.items) await base44.entities.TareaGuia.update(t.id, { estado: "completada" });
+    const ts = await api.entities.TareaGuia.filter({ postulacion_id: po.id, tipo: "escrito" }, { limit: 5 });
+    for (const t of ts.items) await api.entities.TareaGuia.update(t.id, { estado: "completada" });
     toast.success("Carta aprobada");
     cargar(); onChange();
   };

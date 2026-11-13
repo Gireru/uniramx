@@ -1,7 +1,7 @@
 import { Lock, Mail, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { MfaFlow } from "@/components/auth/MfaFlow";
 import { MfaScreen } from "@/components/auth/MfaParts";
@@ -38,7 +38,7 @@ export function RegisterPage() {
     }
     setBusy(true);
     try {
-      await base44.auth.register({ email, password });
+      await api.auth.register({ email, password });
       setStep("otp");
     } catch (err) {
       setError(err.message || "Registration failed");
@@ -52,12 +52,12 @@ export function RegisterPage() {
     setError("");
     setBusy(true);
     try {
-      const result = await base44.auth.verifyOtp({ email, otpCode });
+      const result = await api.auth.verifyOtp({ email, otpCode });
       if (result?.mfa_required) {
         setMfaChallenge(result);
         return;
       }
-      if (result?.access_token) base44.auth.setToken(result.access_token);
+      if (result?.access_token) api.auth.setToken(result.access_token);
       window.location.href = returnTo;
     } catch (err) {
       // Verified server-side but the answer never arrived: the code is spent and
@@ -71,7 +71,7 @@ export function RegisterPage() {
   async function resend() {
     setError("");
     try {
-      await base44.auth.resendOtp(email);
+      await api.auth.resendOtp(email);
       toast("Code sent", { description: "Check your email for the new code." });
     } catch (err) {
       if (isAlreadyVerified(err)) setStep("already_verified");
