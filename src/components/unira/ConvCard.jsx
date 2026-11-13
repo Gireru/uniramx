@@ -8,8 +8,12 @@ export default function ConvCard({ c, extra }) {
   return (
     <motion.div whileHover={{ y: -6, rotate: -0.4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="bg-white rounded-[20px] shadow-soft hover:shadow-lift overflow-hidden flex flex-col h-full">
       <Link to="/convocatoria/$id" params={{ id: c.id }} className="block">
-        <div className="h-[120px] bg-muted relative">
-          {c.imagen_url && <Image src={c.imagen_url} alt={c.titulo} className="w-full h-full" />}
+        <div className="h-[120px] bg-gradient-to-br from-secondary via-[#FFF3F8] to-[#E8ECFF] relative">
+          {c.imagen_url ? (
+            <Image src={c.imagen_url} alt={c.titulo} className="w-full h-full" />
+          ) : (
+            <span className="absolute inset-0 grid place-items-center font-serif-cond text-2xl text-foreground/25">{TIPO[c.tipo]}</span>
+          )}
           {c.demo && <span className="absolute top-2 right-2 bg-[#FFC83D] text-foreground text-xs font-bold px-2 py-1 rounded-full">Ejemplo</span>}
         </div>
       </Link>
