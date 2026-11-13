@@ -8,7 +8,7 @@ import { listarConvocatorias } from "@/lib/convocatorias";
 import { calcularMatch } from "@/lib/match";
 import { obtenerPerfil } from "@/lib/postulaciones";
 import { explicarMatch } from "@/lib/server-fns";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 
 export const Route = createFileRoute("/_authed/para-ti")({
   head: () => ({ meta: [{ title: "Para ti | Unira" }] }),
@@ -54,7 +54,7 @@ function ParaTi() {
   const crecer = (res || []).filter((x) => x.m.paraCrecer);
   const cerradas = (res || []).filter((x) => x.m.elegible && !x.m.abierta && x.c.estado_verificacion === "verificada" && x.c.vigencia === "cerrada");
 
-  const avisar = (c) => base44.entities.Guardado.create({ convocatoria_id: c.id, perfil_id: perfil.id, avisame_cuando_abra: true });
+  const avisar = (c) => api.entities.Guardado.create({ convocatoria_id: c.id, perfil_id: perfil.id, avisame_cuando_abra: true });
 
   return (
     <div className="p-4 md:p-10">

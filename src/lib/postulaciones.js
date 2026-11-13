@@ -1,16 +1,16 @@
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import { calcularMatch } from "@/lib/match";
 
 export async function obtenerPerfil() {
-  const page = await base44.entities.Perfil.list("-created_date", 1);
+  const page = await api.entities.Perfil.list("-created_date", 1);
   return page.items?.[0] || page[0] || null;
 }
 
 // iniciarPostulacion: crea la Postulacion en "descubierta", copia la fecha límite, calcula match y crea el checklist.
 export async function iniciarPostulacion(perfil, c) {
-  const reqs = (await base44.entities.RequisitoConvocatoria.filter({ convocatoria_id: c.id }, { sort: "orden", limit: 30 })).items;
+  const reqs = (await api.entities.RequisitoConvocatoria.filter({ convocatoria_id: c.id }, { sort: "orden", limit: 30 })).items;
   const m = calcularMatch(perfil, c);
-  const po = await base44.entities.Postulacion.create({
+  const po = await api.entities.Postulacion.create({
     perfil_id: perfil.id,
     convocatoria_id: c.id,
     convocatoria_titulo: c.titulo,
@@ -29,7 +29,7 @@ export async function iniciarPostulacion(perfil, c) {
     ...reqs.map((r) => ({ titulo: r.nombre, tipo: r.tipo, responsable: "persona", descripcion: r.descripcion })),
     ...(c.pide_ensayo ? [{ titulo: "Redactar y aprobar tu carta", tipo: "escrito", responsable: "guia" }] : []),
   ].map((t, i) => ({ ...t, postulacion_id: po.id, orden: i, estado: "pendiente", fecha_sugerida: c.fecha_limite || "" }));
-  await base44.entities.TareaGuia.bulkCreate(tareas);
+  await api.entities.TareaGuia.bulkCreate(tareas);
   return po;
 }
 

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Clock, Send, CheckCircle2 } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import MiGuia from "@/components/unira/MiGuia";
 import PostulacionRow from "@/components/unira/PostulacionRow";
 import { obtenerPerfil } from "@/lib/postulaciones";
@@ -27,11 +27,11 @@ function Inicio() {
 
   useEffect(() => {
     obtenerPerfil().then(setPerfil);
-    base44.entities.Postulacion.list("-updated_date", 5).then((p) => setLista(p.items));
+    api.entities.Postulacion.list("-updated_date", 5).then((p) => setLista(p.items));
     Promise.all([
-      base44.entities.Postulacion.count({ etapa: { $in: ["descubierta", "elegibilidad_confirmada", "plan_listo", "reuniendo_documentos", "redactando", "revision_final", "lista_para_enviar"] } }),
-      base44.entities.Postulacion.count({ etapa: { $in: ["enviada", "seguimiento", "resultado_registrado"] } }),
-      base44.entities.Postulacion.count({ resultado: "aceptada" }),
+      api.entities.Postulacion.count({ etapa: { $in: ["descubierta", "elegibilidad_confirmada", "plan_listo", "reuniendo_documentos", "redactando", "revision_final", "lista_para_enviar"] } }),
+      api.entities.Postulacion.count({ etapa: { $in: ["enviada", "seguimiento", "resultado_registrado"] } }),
+      api.entities.Postulacion.count({ resultado: "aceptada" }),
     ]).then(([a, b, d]) => setC({ a, b, d }));
   }, []);
 

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { getAppParams } from "@/lib/app-params";
 
 // The /oauth/consent page: app-side OAuth consent for the app's MCP server. The platform redirects
-// AI clients here (base44/mcp/config.json `consent_path`, default /oauth/consent)
+// AI clients here (`consent_path` in the MCP config, default /oauth/consent)
 // with an opaque `ctx` handle — the authorization request itself lives on the
 // server. The page gates on the app-user session, fetches the display info for
 // the handle, shows what is being granted and posts the approve/deny decision.

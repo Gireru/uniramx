@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { Check, Circle, ExternalLink } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import MiGuia from "@/components/unira/MiGuia";
 import CartaTab from "@/components/unira/CartaTab";
 import ListoTab from "@/components/unira/ListoTab";
@@ -19,10 +19,10 @@ function Postulacion() {
   const [tareas, setTareas] = useState([]);
 
   const cargar = useCallback(async () => {
-    const p = await base44.entities.Postulacion.get(id);
+    const p = await api.entities.Postulacion.get(id);
     setPo(p);
-    setC(await base44.entities.Convocatoria.get(p.convocatoria_id));
-    setTareas((await base44.entities.TareaGuia.filter({ postulacion_id: id }, { sort: "orden", limit: 50 })).items);
+    setC(await api.entities.Convocatoria.get(p.convocatoria_id));
+    setTareas((await api.entities.TareaGuia.filter({ postulacion_id: id }, { sort: "orden", limit: 50 })).items);
   }, [id]);
   useEffect(() => { cargar(); }, [cargar]);
 
@@ -30,9 +30,9 @@ function Postulacion() {
 
   const toggle = async (t) => {
     const nuevo = t.estado === "completada" ? "pendiente" : "completada";
-    await base44.entities.TareaGuia.update(t.id, { estado: nuevo });
+    await api.entities.TareaGuia.update(t.id, { estado: nuevo });
     const etapa = po.etapa === "descubierta" ? "elegibilidad_confirmada" : po.etapa === "elegibilidad_confirmada" ? "reuniendo_documentos" : po.etapa;
-    await base44.entities.Postulacion.update(po.id, { etapa });
+    await api.entities.Postulacion.update(po.id, { etapa });
     cargar();
   };
   const hechas = tareas.filter((t) => t.estado === "completada").length;

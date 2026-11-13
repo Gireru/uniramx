@@ -1,40 +1,89 @@
-# Base44 App — TanStack Start
+# Unira
 
-A full-stack Base44 app: [TanStack Start](https://tanstack.com/start) (React 19, plain JavaScript) with file-based routes, server functions and server routes, server-rendered and hosted by Base44.
+**Las oportunidades existen. Encuentra las tuyas.**
 
-## What is in the starter
+Unira es una plataforma gratuita, impulsada por inteligencia artificial, que ayuda a personas en México a descubrir, entender y aprovechar becas, empleos, prácticas, cursos, concursos y apoyos de emprendimiento. Funciona como un orientador digital: entiende tu situación, te muestra las convocatorias que realmente te aplican y te acompaña a preparar una postulación de calidad.
 
-| Route | File |
+🎬 **[Ver el video pitch](docs/unira-pitch.mp4)**
+
+---
+
+## El problema
+
+La desigualdad de oportunidades no se explica solo por la falta de programas. Existe una **brecha de información, de acceso digital, de orientación y de habilidades para postular**:
+
+- Muchas personas nunca se enteran de que una beca o convocatoria existe.
+- Quien la encuentra a veces no sabe si cumple los requisitos.
+- Otros abandonan el trámite porque no saben preparar un CV, una carta de motivación o reunir los documentos.
+
+En México, miles de personas pierden oportunidades no por falta de talento, sino porque no saben dónde buscar ni cómo solicitarlas.
+
+## La solución
+
+Unira centraliza oportunidades verificadas y ofrece acompañamiento personalizado de principio a fin:
+
+1. **Cuéntanos sobre ti** — un quiz breve (o conversación) que solo pide la información indispensable.
+2. **Descubre opciones** — recomendaciones explicables: por qué te aplica cada convocatoria, requisitos, fecha límite, costo y enlace oficial.
+3. **Prepárate** — un agente de IA te ayuda a crear tu CV, redactar cartas de motivación y armar tu lista de requisitos, siempre a partir de tus datos reales y sin inventar información.
+4. **Postúlate** — tú revisas y tú envías. Unira da seguimiento a cada postulación, sus etapas y fechas importantes.
+
+> Unira mejora tu preparación, pero no sustituye la decisión de las instituciones ni garantiza la aceptación.
+
+## ¿Para quién es?
+
+| Segmento | Qué encuentra en Unira |
 | --- | --- |
-| `/` | `src/routes/index.jsx` — a server-rendered page whose loader calls a server function |
-| `GET /api/time` | `src/routes/api/time.js` — a server route: a raw HTTP endpoint next to the pages |
+| Familias con hijos en primaria | Becas y apoyos escolares filtrados por estado, tipo de escuela y requisitos |
+| Adolescentes y jóvenes | Becas, orientación vocacional, concursos y cursos |
+| Universitarios y recién egresados | Prácticas, primer empleo, intercambios, becas y optimización de CV |
+| Adultos en transición laboral | Vacantes, CV guiado, capacitación y preparación de entrevistas |
+| Personas emprendedoras | Convocatorias, cursos, mentorías y apoyos |
 
-## Run locally
+## Funciones principales
 
-```bash
-npm ci
-base44 login   # one-time per machine
-base44 link    # one-time per clone
-base44 dev     # local backend + app together
+- **Explorar convocatorias** con filtros por tipo, ubicación y fecha.
+- **Recomendaciones "Para ti"** basadas en elegibilidad, intereses y ubicación, con razones visibles.
+- **Mi currículum**: editor de CV guiado y exportación a PDF legible por sistemas ATS.
+- **Carta de motivación asistida** con detección de afirmaciones sin respaldo.
+- **Guía con IA** que explica requisitos y siguientes pasos de cada postulación.
+- **Seguimiento de postulaciones** por etapas, con índice de preparación.
+- **Alertas opcionales** cuando una convocatoria guardada abre, siempre con consentimiento.
+- **Confianza y seguridad**: fuente oficial y fecha de verificación en cada ficha, reporte de datos incorrectos y una sección de ayuda contra fraudes.
+- **Accesibilidad**: lenguaje sencillo y experiencia pensada para el celular.
+
+## Principios
+
+- **Fuentes oficiales**: cada oportunidad incluye URL de origen, vigencia y estado de verificación. La IA nunca inventa convocatorias.
+- **Privacidad**: mínima recolección de datos, consentimiento explícito y la opción de borrar tu información en cualquier momento.
+- **Equidad**: no se excluye a nadie por características protegidas salvo requisitos legítimos de cada programa.
+- **Gratuito para las personas**: la búsqueda y la orientación esenciales siempre serán gratis.
+
+## Tecnología
+
+- [TanStack Start](https://tanstack.com/start) con React 19 (JavaScript), rutas por archivo y renderizado del lado del servidor.
+- Tailwind CSS y componentes shadcn/ui.
+- TanStack AI para el agente de orientación y la redacción asistida.
+- Generación de PDF para el CV.
+
+### Estructura
+
+```
+src/
+  routes/            Páginas (explorar, quiz, convocatoria, padres, fuentes…)
+  routes/_authed/    Área personal: inicio, para ti, postulaciones, mi currículum, guía, perfil
+  components/unira/  Componentes de la interfaz de Unira
+  lib/               Lógica de matching, postulaciones, CV e IA
 ```
 
-## Build and publish
+### Desarrollo local
 
 ```bash
-npm run build         # -> dist/client (assets) + dist/server (the Worker)
-base44 deploy         # or publish from the Base44 builder
+npm install
+npm run dev     # servidor de desarrollo
+npm run build   # build de producción
+npm run lint
 ```
 
-There is no `index.html`: the HTML document is rendered on the server from `src/routes/__root.jsx`. The build runs through the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), so dev and build both execute server code in `workerd`.
+## Equipo
 
-## How the pieces fit
-
-- **Pages** are files in `src/routes/`. A route's `loader` runs on the server for a document request and in the browser for a client navigation; `Route.useLoaderData()` gives the component the resolved data.
-- **Server functions** (`src/lib/server-fns.js`) are RPCs created with `createServerFn`. `src/start.js` runs every one of them through `authMiddleware`, which sends the visitor's token along, so `context.getBase44()` returns a client acting as that visitor and entity access rules apply. `context.getBase44().asServiceRole` bypasses them, so use it only after authenticating the caller (`.middleware([requireUser])`) and checking they may access the records involved: server functions and server routes are public endpoints anyone can call with any input. See **Server Security** in `AGENTS.md`. Call it only in handlers that need Base44: it reads the platform headers, and a handler that never calls it works without them.
-- **Secrets** are read in server code with `import { secrets } from "base44:runtime"` → `secrets.get("NAME")`, inside a handler. Never `process.env`.
-- **Server routes** (`src/routes/api/*.js`) are raw HTTP endpoints for URLs something other than the app's own code requests (webhooks, downloads, feeds); the app's pages call server functions. `src/start.js` runs every request through `base44RequestMiddleware`, so their `server.handlers` receive the same `context.getBase44()` (`({ request, params, context }) => …`).
-- **Server-only code** lives in `*.server.js` files (TanStack refuses to bundle them for the browser).
-- **Auth** is resolved client-side after hydration (`useAuth()`); the server is anonymous on a document request, so give per-user pages `ssr: false`.
-- **Sign-in and gated pages** are not wired in the starter: `src/components/auth/` holds the pages (login, register, password reset, MCP consent) and a login gate for `src/routes/_authed/`, to add when the app needs them. See **Adding Authentication** in `AGENTS.md`.
-- **AI**: TanStack AI is installed and runs on the Base44 AI gateway, with no API key and usage billed to the app's AI credits. `gatewayModel(context.getBase44())` in `src/lib/ai.server.js` builds the adapter; `AGENTS.md` has a streaming chat example (a server route plus `useChat`).
-- **Caching**: the platform caches only what a route opts into via `headers()` (`Cache-Control: public, s-maxage=…`). Everything else is served fresh.
+Proyecto creado en un hackathon de impacto social en México. Nuestro objetivo: que el acceso a las oportunidades no dependa de saber dónde buscar.

@@ -17,8 +17,7 @@ export default defineConfig({
   environments: {
     ssr: {
       optimizeDeps: { include: PREBUNDLE },
-      // Source maps for the Worker only, never served: they let Base44 point an error's stack at the app's own
-      // files. Without the sources, so the app's code isn't copied into them. The browser build gets none.
+      // Server-only source maps (never served) so error stacks point at the app's own files.
       build: { sourcemap: true, rolldownOptions: { output: { sourcemapExcludeSources: true } } },
     },
   },

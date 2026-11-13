@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ExternalLink, CalendarDays, CheckCircle2, Flag } from "lucide-react";
 import { toast } from "sonner";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import PublicHeader from "@/components/unira/PublicHeader";
 import Footer from "@/components/unira/Footer";
 import MiGuia from "@/components/unira/MiGuia";
@@ -26,12 +26,12 @@ function Detalle() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    base44.entities.Convocatoria.get(id).then(setC);
-    base44.entities.RequisitoConvocatoria.filter({ convocatoria_id: id }, { sort: "orden", limit: 30 }).then((p) => setReqs(p.items));
+    api.entities.Convocatoria.get(id).then(setC);
+    api.entities.RequisitoConvocatoria.filter({ convocatoria_id: id }, { sort: "orden", limit: 30 }).then((p) => setReqs(p.items));
   }, [id]);
   useEffect(() => {
     if (!isAuthenticated) return;
-    base44.entities.Postulacion.filter({ convocatoria_id: id }, { limit: 1 }).then((p) => setPo(p.items[0] || null));
+    api.entities.Postulacion.filter({ convocatoria_id: id }, { limit: 1 }).then((p) => setPo(p.items[0] || null));
   }, [id, isAuthenticated]);
 
   if (!c) return <div className="min-h-screen"><PublicHeader /><div className="max-w-[1200px] mx-auto p-6"><div className="h-64 bg-white rounded-[28px] animate-pulse" /></div></div>;
@@ -45,7 +45,7 @@ function Detalle() {
     nav({ to: "/postulacion/$id", params: { id: nueva.id } });
   };
   const reportar = async () => {
-    await base44.entities.ReporteDato.create({ convocatoria_id: c.id, motivo: "enlace_roto", detalle: "Reportado desde el detalle" });
+    await api.entities.ReporteDato.create({ convocatoria_id: c.id, motivo: "enlace_roto", detalle: "Reportado desde el detalle" });
     toast.success("Gracias, un curador lo revisará");
   };
   const abierta = estaAbierta(c);
@@ -99,7 +99,7 @@ function Detalle() {
               po ? <Link to="/postulacion/$id" params={{ id: po.id }} className="mt-4 h-12 rounded-full bg-primary text-white font-bold flex items-center justify-center">Continuar con mi guía →</Link>
                  : <button disabled={busy} onClick={empezar} className="mt-4 w-full h-12 rounded-full bg-primary text-white font-bold disabled:opacity-60">{busy ? "Preparando…" : "Postular con mi guía"}</button>
             ) : (
-              <button onClick={async () => { if (!isAuthenticated) return navigateToLogin(); await base44.entities.Guardado.create({ convocatoria_id: c.id, avisame_cuando_abra: true }); toast.success("Te avisaremos cuando abra"); }} className="mt-4 w-full h-12 rounded-full border-2 border-primary text-primary font-bold">Avísame cuando abra</button>
+              <button onClick={async () => { if (!isAuthenticated) return navigateToLogin(); await api.entities.Guardado.create({ convocatoria_id: c.id, avisame_cuando_abra: true }); toast.success("Te avisaremos cuando abra"); }} className="mt-4 w-full h-12 rounded-full border-2 border-primary text-primary font-bold">Avísame cuando abra</button>
             )}
             <div className="mt-4 flex items-center gap-2"><MiGuia className="w-16 h-14" /><span className="text-sm bg-[#E8ECFF] rounded-xl px-3 py-2">{po ? "Sigue con tu checklist" : "Yo te acompaño paso a paso"}</span></div>
           </aside>

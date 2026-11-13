@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Bot, ShieldCheck, CalendarCheck, HandHeart, Ban } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import { Star } from "@/components/unira/Doodles";
 
 const PASOS = [
@@ -19,7 +19,7 @@ const CONFIANZA = [
 export default function ImpactoYConfianza() {
   const [n, setN] = useState(null);
   useEffect(() => {
-    base44.entities.Convocatoria.count({ activa: true, demo: false, estado_verificacion: "verificada" }).then(setN);
+    api.entities.Convocatoria.count({ activa: true, demo: false, estado_verificacion: "verificada" }).then(setN);
   }, []);
   return (
     <>

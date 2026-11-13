@@ -1,4 +1,4 @@
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import { getAppParams } from "@/lib/app-params";
 
 const appId = () => getAppParams().appId;
@@ -22,7 +22,7 @@ async function post(suffix, body, token) {
 
 export async function loginWithMfa(email, password) {
   const result = await post("login", { email, password });
-  if (result.access_token) base44.auth.setToken(result.access_token);
+  if (result.access_token) api.auth.setToken(result.access_token);
   return result;
 }
 
@@ -42,7 +42,7 @@ export async function loginWithSocial(provider, returnTo) {
   const response = await fetch(`/api/apps/public/login-info/by-id/${appId()}`);
   if (!response.ok) throw new Error("Unable to load sign-in options");
   const info = await response.json();
-  if (info.auth_config?.mfa_policy !== "required") return base44.auth.loginWithProvider(provider, returnTo);
+  if (info.auth_config?.mfa_policy !== "required") return api.auth.loginWithProvider(provider, returnTo);
   const url = new URL("/auth/mfa", window.location.origin);
   url.search = new URLSearchParams({ app_id: appId(), oauth_start: provider, from_url: returnTo });
   window.location.assign(url.href);

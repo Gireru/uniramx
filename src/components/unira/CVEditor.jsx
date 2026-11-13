@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Plus, Trash2, Download, Save } from "lucide-react";
 import { toast } from "sonner";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/client";
 import Campo from "@/components/unira/Campo";
 import { descargarCV } from "@/lib/cvPdf";
 import { obtenerPerfil } from "@/lib/postulaciones";
@@ -25,7 +25,7 @@ export default function CVEditor() {
 
   useEffect(() => {
     (async () => {
-      const [perfil, existentes] = await Promise.all([obtenerPerfil(), base44.entities.CV.list("-created_date", 1)]);
+      const [perfil, existentes] = await Promise.all([obtenerPerfil(), api.entities.CV.list("-created_date", 1)]);
       const guardado = existentes.items?.[0] || existentes[0];
       setCv({ ...VACIO, nombre: perfil?.nombre_preferido || "", educacion: [], experiencia: [], ...guardado });
     })();
@@ -46,11 +46,11 @@ export default function CVEditor() {
 
   const guardar = async (descargar) => {
     setGuardando(true);
-    const existentes = await base44.entities.CV.list("-created_date", 1);
+    const existentes = await api.entities.CV.list("-created_date", 1);
     const previo = existentes.items?.[0] || existentes[0];
     const datos = { ...cv };
     delete datos.id; delete datos.created_by_id;
-    const r = previo ? await base44.entities.CV.update(previo.id, datos) : await base44.entities.CV.create(datos);
+    const r = previo ? await api.entities.CV.update(previo.id, datos) : await api.entities.CV.create(datos);
     setGuardando(false);
     if (descargar) { descargarCV(cv); toast.success("CV descargado"); } else toast.success("CV guardado");
     return r;
