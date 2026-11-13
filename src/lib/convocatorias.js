@@ -1,6 +1,7 @@
 import { base44 } from "@/api/base44Client";
 
-export const TIPO = { beca: "Beca", apoyo: "Apoyo", curso: "Curso", concurso: "Concurso" };
+export const TIPO = { beca: "Beca", apoyo: "Apoyo", curso: "Curso", concurso: "Concurso", empleo: "Empleo", practica: "Práctica", intercambio: "Intercambio" };
+export const ALCANCE = { mexico: "En México", internacional: "En el extranjero" };
 export const NIVELES = [
   { id: "primaria", label: "Primaria" },
   { id: "secundaria", label: "Secundaria" },

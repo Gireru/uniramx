@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import Logo from "@/components/unira/Logo";
 import MiGuia from "@/components/unira/MiGuia";
+import Campo from "@/components/unira/Campo";
 import { useAuth } from "@/lib/AuthContext";
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/quiz")({
 });
 
 const NIVELES = [["primaria", "Primaria"], ["secundaria", "Secundaria"], ["prepa", "Prepa"], ["universidad", "Universidad"], ["posgrado", "Posgrado"], ["egresado", "Ya egresé"], ["adulto", "Adulto en transición"]];
-const BUSCA = [["beca", "Beca"], ["apoyo", "Apoyo"], ["curso", "Curso"], ["concurso", "Concurso"]];
+const BUSCA = [["beca", "Beca"], ["apoyo", "Apoyo"], ["curso", "Curso"], ["concurso", "Concurso"], ["empleo", "Empleo"], ["practica", "Práctica"], ["intercambio", "Intercambio"]];
 const inp = "w-full h-12 rounded-full border border-border bg-white px-5";
 const lista = (s) => String(s || "").split(",").map((x) => x.trim()).filter(Boolean);
 
@@ -44,11 +45,11 @@ function Quiz() {
 
   const pasos = [
     { t: "¿Para quién es?", ok: !!r.para, c: <Opciones valor={r.para} onChange={(v) => set("para", v)} opciones={[["yo", "Para mí"], ["menor", "Para mi hijo o hija menor"], ["adulto_mayor", "Para un familiar adulto mayor"]]} /> },
-    { t: "¿En qué nivel estás?", ok: !!r.etapa, c: <><Opciones valor={r.etapa} onChange={(v) => set("etapa", v)} opciones={NIVELES} /><input className={`${inp} mt-4`} placeholder="Grado o semestre" value={r.grado || ""} onChange={(e) => set("grado", e.target.value)} /></> },
-    { t: "¿Dónde estudias?", ok: !!r.estado, c: <div className="grid gap-3 mt-6"><input className={inp} placeholder="Estado (ej. Nuevo León)" value={r.estado || ""} onChange={(e) => set("estado", e.target.value)} /><input className={inp} placeholder="Municipio" value={r.municipio || ""} onChange={(e) => set("municipio", e.target.value)} /><Opciones valor={r.tipo_escuela} onChange={(v) => set("tipo_escuela", v)} opciones={[["publica", "Escuela pública"], ["privada", "Escuela privada"]]} /></div> },
-    { t: "Cuéntanos de tus estudios", ok: r.promedio !== undefined && r.promedio !== "", c: <div className="grid gap-3 mt-6"><input className={inp} type="number" min="0" max="10" step="0.1" placeholder="Promedio (0 a 10)" value={r.promedio ?? ""} onChange={(e) => set("promedio", e.target.value)} /><input className={inp} placeholder="Carrera o área" value={r.carrera || ""} onChange={(e) => set("carrera", e.target.value)} /><input className={inp} placeholder="Intereses, separados por coma" value={r.intereses || ""} onChange={(e) => set("intereses", e.target.value)} /><input className={inp} placeholder="Habilidades, separadas por coma" value={r.habilidades || ""} onChange={(e) => set("habilidades", e.target.value)} /><input className={inp} placeholder="Logros, separados por coma" value={r.logros || ""} onChange={(e) => set("logros", e.target.value)} /></div> },
-    { t: "¿Qué buscas?", ok: (r.busca || []).length > 0, c: <><Opciones multi valor={r.busca} onChange={(v) => set("busca", v)} opciones={BUSCA} /><input className={`${inp} mt-4`} placeholder="Tu meta a 3 años" value={r.metas || ""} onChange={(e) => set("metas", e.target.value)} /></> },
-    { t: "Escribe 3 o 4 oraciones sobre ti, como se las contarías a un amigo", ok: true, c: <textarea className="w-full mt-6 rounded-2xl border border-border p-4 min-h-[140px]" value={r.voz || ""} onChange={(e) => set("voz", e.target.value)} /> },
+    { t: "¿En qué nivel estás?", ok: !!r.etapa, c: <><Opciones valor={r.etapa} onChange={(v) => set("etapa", v)} opciones={NIVELES} /><Campo className="mt-4" placeholder="Grado o semestre" value={r.grado || ""} onChange={(v) => set("grado", v)} /></> },
+    { t: "¿Dónde estudias?", ok: !!r.estado, c: <div className="grid gap-3 mt-6"><Campo placeholder="Estado (ej. Nuevo León)" value={r.estado || ""} onChange={(v) => set("estado", v)} /><Campo placeholder="Municipio" value={r.municipio || ""} onChange={(v) => set("municipio", v)} /><Opciones valor={r.tipo_escuela} onChange={(v) => set("tipo_escuela", v)} opciones={[["publica", "Escuela pública"], ["privada", "Escuela privada"]]} /></div> },
+    { t: "Cuéntanos de tus estudios", ok: r.promedio !== undefined && r.promedio !== "", c: <div className="grid gap-3 mt-6"><input className={inp} type="number" min="0" max="10" step="0.1" placeholder="Promedio (0 a 10)" value={r.promedio ?? ""} onChange={(e) => set("promedio", e.target.value)} /><Campo placeholder="Carrera o área" value={r.carrera || ""} onChange={(v) => set("carrera", v)} /><Campo placeholder="Intereses, separados por coma" value={r.intereses || ""} onChange={(v) => set("intereses", v)} /><Campo placeholder="Habilidades, separadas por coma" value={r.habilidades || ""} onChange={(v) => set("habilidades", v)} /><Campo placeholder="Logros, separados por coma" value={r.logros || ""} onChange={(v) => set("logros", v)} /></div> },
+    { t: "¿Qué buscas?", ok: (r.busca || []).length > 0, c: <><Opciones multi valor={r.busca} onChange={(v) => set("busca", v)} opciones={BUSCA} /><Campo className="mt-4" placeholder="Tu meta a 3 años" value={r.metas || ""} onChange={(v) => set("metas", v)} /></> },
+    { t: "Escribe 3 o 4 oraciones sobre ti, como se las contarías a un amigo", ok: true, c: <Campo className="mt-6" multiline placeholder="Escribe o dicta 3 o 4 oraciones" value={r.voz || ""} onChange={(v) => set("voz", v)} /> },
     { t: "Tu privacidad", ok: !!r.c_datos, c: <div className="mt-6 space-y-4 text-left">{[["c_datos", "Acepto el uso de mis datos para recomendarme oportunidades (obligatorio)"], ["c_alertas", "Quiero alertas por correo"], ["c_analitica", "Acepto analítica anónima"]].map(([k, l]) => <label key={k} className="flex gap-3 items-start"><Checkbox checked={!!r[k]} onCheckedChange={(v) => set(k, !!v)} /><span>{l}</span></label>)}{r.para === "menor" && <p className="text-sm text-[#5B6180]">Al ser un perfil de menor, aceptas tú como tutor.</p>}</div> },
   ];
   const p = pasos[paso];
@@ -79,7 +80,7 @@ function Quiz() {
       <AnimatePresence mode="wait">
         <motion.div key={paso} initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} transition={{ duration: 0.3 }} className="flex-1 pb-28">
           <h1 className="font-serif-cond text-3xl text-center mt-8">{p.t}</h1>
-          {paso === 0 && <input className={`${inp} mt-6`} placeholder="¿Cómo te llamamos?" value={r.nombre || ""} onChange={(e) => set("nombre", e.target.value)} />}
+          {paso === 0 && <Campo className="mt-6" placeholder="¿Cómo te llamamos?" value={r.nombre || ""} onChange={(v) => set("nombre", v)} />}
           {p.c}
         </motion.div>
       </AnimatePresence>

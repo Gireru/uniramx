@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import PublicHeader from "@/components/unira/PublicHeader";
 import Hero from "@/components/unira/Hero";
 import AbiertasAhora from "@/components/unira/AbiertasAhora";
+import MundoBand from "@/components/unira/MundoBand";
 import ImpactoYConfianza from "@/components/unira/ImpactoYConfianza";
 import Footer from "@/components/unira/Footer";
 
@@ -16,6 +17,7 @@ function Landing() {
       <PublicHeader />
       <Hero />
       <AbiertasAhora />
+      <MundoBand />
       <ImpactoYConfianza />
       <Footer />
     </div>

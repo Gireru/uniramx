@@ -6,7 +6,7 @@ import { TIPO, textoFecha, estaAbierta } from "@/lib/convocatorias";
 export default function ConvCard({ c, extra }) {
   const abierta = estaAbierta(c);
   return (
-    <motion.div whileHover={{ y: -4 }} className="bg-white rounded-[20px] shadow-soft overflow-hidden flex flex-col">
+    <motion.div whileHover={{ y: -6, rotate: -0.4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="bg-white rounded-[20px] shadow-soft hover:shadow-lift overflow-hidden flex flex-col h-full">
       <Link to="/convocatoria/$id" params={{ id: c.id }} className="block">
         <div className="h-[120px] bg-muted relative">
           {c.imagen_url && <Image src={c.imagen_url} alt={c.titulo} className="w-full h-full" />}

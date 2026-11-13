@@ -4,6 +4,7 @@ import confetti from "canvas-confetti";
 import { toast } from "sonner";
 import { base44 } from "@/api/base44Client";
 import MiGuia from "@/components/unira/MiGuia";
+import Campo from "@/components/unira/Campo";
 import { generarBorrador } from "@/lib/server-fns";
 
 const PREGUNTAS = [
@@ -73,9 +74,7 @@ export default function CartaTab({ po, onChange }) {
       <div className="flex items-center gap-3"><MiGuia estado={cargando ? "escribiendo" : "reposo"} className="w-16 h-14" /><p className="font-medium">Respóndeme con tus palabras. Solo usaré lo que me digas, sin inventar nada.</p></div>
       <div className="mt-4 space-y-4">
         {PREGUNTAS.map((q, i) => (
-          <label key={q} className="block text-sm font-medium">{q}
-            <textarea value={resp[i]} onChange={(e) => setResp(resp.map((x, j) => (j === i ? e.target.value : x)))} className="mt-1 w-full border border-border rounded-2xl p-3 min-h-[70px] font-normal" />
-          </label>
+          <Campo key={q} label={q} multiline value={resp[i]} onChange={(v) => setResp(resp.map((x, j) => (j === i ? v : x)))} placeholder="Escribe o dicta tu respuesta" />
         ))}
       </div>
       <button onClick={crear} disabled={cargando || resp.filter((x) => x.trim()).length < 3} className="mt-5 h-12 px-8 rounded-full bg-primary text-white font-bold disabled:opacity-50">{cargando ? "Escribiendo tu carta…" : "Crear mi carta"}</button>

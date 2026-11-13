@@ -11,14 +11,35 @@
         "beca",
         "apoyo",
         "curso",
-        "concurso"
+        "concurso",
+        "empleo",
+        "practica",
+        "intercambio"
       ],
       "enumColors": [
         "pink",
         "blue",
         "green",
-        "yellow"
+        "yellow",
+        "purple",
+        "gray",
+        "blue"
       ]
+    },
+    "alcance": {
+      "type": "string",
+      "enum": [
+        "mexico",
+        "internacional"
+      ],
+      "enumColors": [
+        "gray",
+        "purple"
+      ],
+      "default": "mexico"
+    },
+    "pais": {
+      "type": "string"
     },
     "institucion_id": {
       "type": "string"

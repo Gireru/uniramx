@@ -1,0 +1,116 @@
+{
+  "name": "CV",
+  "type": "object",
+  "properties": {
+    "perfil_id": {
+      "type": "string"
+    },
+    "titulo": {
+      "type": "string"
+    },
+    "nombre": {
+      "type": "string"
+    },
+    "correo": {
+      "type": "string"
+    },
+    "telefono": {
+      "type": "string"
+    },
+    "ciudad": {
+      "type": "string"
+    },
+    "enlace": {
+      "type": "string"
+    },
+    "resumen": {
+      "type": "string"
+    },
+    "educacion": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "institucion": {
+            "type": "string"
+          },
+          "grado": {
+            "type": "string"
+          },
+          "periodo": {
+            "type": "string"
+          },
+          "detalle": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "experiencia": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "puesto": {
+            "type": "string"
+          },
+          "lugar": {
+            "type": "string"
+          },
+          "periodo": {
+            "type": "string"
+          },
+          "detalle": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "habilidades": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "idiomas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "certificaciones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "referencias": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "contacto": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "nombre"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}
