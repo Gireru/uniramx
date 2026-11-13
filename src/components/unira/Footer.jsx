@@ -12,6 +12,8 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium md:justify-end items-start">
+          <Link to="/acerca-de-unira" className="hover:text-primary">Acerca de Unira</Link>
+          <Link to="/contacto" className="hover:text-primary">Contacto</Link>
           <Link to="/fuentes" className="hover:text-primary">Fuentes</Link>
           <Link to="/privacidad" className="hover:text-primary">Privacidad</Link>
           <Link to="/ayuda-contra-fraudes" className="hover:text-primary">Ayuda contra fraudes</Link>

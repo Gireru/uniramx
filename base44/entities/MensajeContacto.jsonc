@@ -1,0 +1,64 @@
+{
+  "name": "MensajeContacto",
+  "type": "object",
+  "properties": {
+    "nombre": {
+      "type": "string"
+    },
+    "correo": {
+      "type": "string"
+    },
+    "motivo": {
+      "type": "string",
+      "enum": [
+        "convocatoria",
+        "institucion",
+        "problema",
+        "otro"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "yellow",
+        "gray"
+      ],
+      "default": "otro"
+    },
+    "mensaje": {
+      "type": "string"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "nuevo",
+        "atendido"
+      ],
+      "enumColors": [
+        "yellow",
+        "green"
+      ],
+      "default": "nuevo"
+    }
+  },
+  "required": [
+    "mensaje"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

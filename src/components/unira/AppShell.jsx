@@ -16,7 +16,7 @@ const LATERAL = [
   { to: "/postulaciones", label: "Mis postulaciones", Icon: ClipboardList },
   { to: "/para-ti", label: "Para ti", Icon: Star },
   { to: "/guia", label: "Mi guía", Icon: Sparkles },
-  { to: "/cv", label: "Mi CV", Icon: FileText },
+  { to: "/mi-curriculum", label: "Mi CV", Icon: FileText },
   { to: "/perfil", label: "Perfil", Icon: User },
 ];
 

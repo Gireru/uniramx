@@ -54,7 +54,7 @@ function Perfil() {
         <label className="flex items-center justify-between py-3 text-sm"><span>Alertas por correo</span><Switch checked={!!p.consentimiento_alertas} onCheckedChange={alertas} /></label>
       </div>
       <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
-        <Link to="/cv" className="h-12 px-6 rounded-full bg-[#2B4BFF] text-white font-bold flex items-center justify-center w-full sm:w-auto">Mi CV</Link>
+        <Link to="/mi-curriculum" className="h-12 px-6 rounded-full bg-[#2B4BFF] text-white font-bold flex items-center justify-center w-full sm:w-auto">Mi CV</Link>
         <Link to="/quiz" className="h-12 px-6 rounded-full border-2 border-[#2B4BFF] text-[#2B4BFF] font-bold flex items-center justify-center w-full sm:w-auto">Rehacer quiz</Link>
         <button onClick={exportar} className="h-12 px-6 rounded-full bg-white border border-border font-medium w-full sm:w-auto">Exportar mis datos</button>
         <button onClick={borrar} className="h-12 px-6 rounded-full bg-white border border-[#B42318] text-[#B42318] font-medium w-full sm:w-auto">Borrar mi cuenta y datos</button>
