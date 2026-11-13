@@ -1,0 +1,253 @@
+{
+  "name": "Convocatoria",
+  "type": "object",
+  "properties": {
+    "titulo": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "beca",
+        "apoyo",
+        "curso",
+        "concurso"
+      ],
+      "enumColors": [
+        "pink",
+        "blue",
+        "green",
+        "yellow"
+      ]
+    },
+    "institucion_id": {
+      "type": "string"
+    },
+    "institucion_nombre": {
+      "type": "string"
+    },
+    "resumen_sencillo": {
+      "type": "string"
+    },
+    "imagen_url": {
+      "type": "string"
+    },
+    "etapas_objetivo": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "edad_min": {
+      "type": "number"
+    },
+    "edad_max": {
+      "type": "number"
+    },
+    "estados_aplica": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tipo_escuela_requerida": {
+      "type": "string",
+      "enum": [
+        "publica",
+        "privada",
+        "cualquiera"
+      ]
+    },
+    "promedio_minimo": {
+      "type": "number"
+    },
+    "carreras": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "modalidad": {
+      "type": "string"
+    },
+    "requiere_tutor": {
+      "type": "boolean"
+    },
+    "pide_ensayo": {
+      "type": "boolean"
+    },
+    "pide_cv": {
+      "type": "boolean"
+    },
+    "pide_entrevista": {
+      "type": "boolean"
+    },
+    "beneficios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "type": "string"
+          },
+          "detalle": {
+            "type": "string"
+          },
+          "icono": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "monto_o_beneficio": {
+      "type": "string"
+    },
+    "costo": {
+      "type": "string"
+    },
+    "url_oficial": {
+      "type": "string"
+    },
+    "url_postulacion": {
+      "type": "string"
+    },
+    "url_fuente": {
+      "type": "string"
+    },
+    "metodo_ingesta": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "csv",
+        "ckan",
+        "extraccion_llm",
+        "navegador"
+      ]
+    },
+    "fecha_consulta": {
+      "type": "string",
+      "format": "date"
+    },
+    "fecha_verificacion": {
+      "type": "string",
+      "format": "date"
+    },
+    "verificada_por": {
+      "type": "string"
+    },
+    "estado_verificacion": {
+      "type": "string",
+      "enum": [
+        "verificada",
+        "por_revisar",
+        "vencida",
+        "reportada"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red",
+        "gray"
+      ]
+    },
+    "fecha_apertura": {
+      "type": "string",
+      "format": "date"
+    },
+    "fecha_limite": {
+      "type": "string",
+      "format": "date"
+    },
+    "fecha_limite_texto": {
+      "type": "string"
+    },
+    "vigencia": {
+      "type": "string",
+      "enum": [
+        "proxima",
+        "vigente",
+        "cerrada",
+        "permanente",
+        "por_confirmar"
+      ],
+      "enumColors": [
+        "blue",
+        "green",
+        "gray",
+        "purple",
+        "yellow"
+      ]
+    },
+    "perfil_ganador": {
+      "type": "object",
+      "properties": {
+        "promedio_tipico": {
+          "type": "number"
+        },
+        "actividades_tipicas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notas": {
+          "type": "string"
+        }
+      }
+    },
+    "nivel_competencia": {
+      "type": "string",
+      "enum": [
+        "baja",
+        "media",
+        "alta",
+        "desconocida"
+      ]
+    },
+    "dias_estimados_de_tramite": {
+      "type": "number"
+    },
+    "advertencias": {
+      "type": "string"
+    },
+    "etiquetas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "destacada": {
+      "type": "boolean"
+    },
+    "demo": {
+      "type": "boolean"
+    },
+    "activa": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "titulo",
+    "tipo"
+  ],
+  "rls": {
+    "read": {
+      "data.activa": true
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "name": "Postulacion",
+  "type": "object",
+  "properties": {
+    "perfil_id": {
+      "type": "string"
+    },
+    "convocatoria_id": {
+      "type": "string"
+    },
+    "convocatoria_titulo": {
+      "type": "string"
+    },
+    "institucion_nombre": {
+      "type": "string"
+    },
+    "imagen_url": {
+      "type": "string"
+    },
+    "etapa": {
+      "type": "string",
+      "enum": [
+        "descubierta",
+        "elegibilidad_confirmada",
+        "plan_listo",
+        "reuniendo_documentos",
+        "redactando",
+        "revision_final",
+        "lista_para_enviar",
+        "enviada",
+        "seguimiento",
+        "resultado_registrado",
+        "cerrada_sin_envio"
+      ],
+      "default": "descubierta"
+    },
+    "indice_preparacion": {
+      "type": "number"
+    },
+    "match_pct": {
+      "type": "number"
+    },
+    "razones_match": {
+      "type": "object"
+    },
+    "tutor_aprobo": {
+      "type": "boolean"
+    },
+    "fecha_limite_copiada": {
+      "type": "string"
+    },
+    "fecha_envio_autodeclarada": {
+      "type": "string"
+    },
+    "siguiente_accion": {
+      "type": "string"
+    },
+    "resultado": {
+      "type": "string",
+      "enum": [
+        "aceptada",
+        "no_aceptada",
+        "en_espera",
+        "retirada"
+      ]
+    },
+    "demo": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "convocatoria_id"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

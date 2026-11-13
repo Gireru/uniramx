@@ -1,0 +1,62 @@
+{
+  "name": "TareaGuia",
+  "type": "object",
+  "properties": {
+    "postulacion_id": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string"
+    },
+    "titulo": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "string"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "pendiente",
+        "en_curso",
+        "esperando_persona",
+        "esperando_tutor",
+        "completada",
+        "bloqueada"
+      ],
+      "default": "pendiente"
+    },
+    "responsable": {
+      "type": "string",
+      "enum": [
+        "guia",
+        "persona",
+        "tutor"
+      ]
+    },
+    "orden": {
+      "type": "number"
+    },
+    "fecha_sugerida": {
+      "type": "string"
+    },
+    "razon": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "postulacion_id",
+    "titulo"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "name": "Perfil",
+  "type": "object",
+  "properties": {
+    "tipo_cuenta": {
+      "type": "string",
+      "enum": [
+        "estudiante",
+        "tutor",
+        "adulto",
+        "curador"
+      ]
+    },
+    "nombre_preferido": {
+      "type": "string"
+    },
+    "es_menor": {
+      "type": "boolean"
+    },
+    "etapa": {
+      "type": "string",
+      "enum": [
+        "primaria",
+        "secundaria",
+        "prepa",
+        "universidad",
+        "posgrado",
+        "egresado",
+        "adulto"
+      ]
+    },
+    "grado_o_semestre": {
+      "type": "string"
+    },
+    "estado": {
+      "type": "string"
+    },
+    "municipio": {
+      "type": "string"
+    },
+    "tipo_escuela": {
+      "type": "string",
+      "enum": [
+        "publica",
+        "privada"
+      ]
+    },
+    "carrera": {
+      "type": "string"
+    },
+    "promedio": {
+      "type": "number"
+    },
+    "intereses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "habilidades": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "logros": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metas": {
+      "type": "string"
+    },
+    "modalidad": {
+      "type": "string",
+      "enum": [
+        "presencial",
+        "remoto",
+        "ambos"
+      ]
+    },
+    "busca": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "muestra_de_voz": {
+      "type": "string"
+    },
+    "consentimiento_datos": {
+      "type": "boolean"
+    },
+    "consentimiento_alertas": {
+      "type": "boolean"
+    },
+    "consentimiento_analitica": {
+      "type": "boolean"
+    },
+    "reducir_animaciones": {
+      "type": "boolean"
+    },
+    "onboarding_completo": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "nombre_preferido"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

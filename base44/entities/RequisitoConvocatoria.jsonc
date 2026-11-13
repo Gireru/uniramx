@@ -1,0 +1,62 @@
+{
+  "name": "RequisitoConvocatoria",
+  "type": "object",
+  "properties": {
+    "convocatoria_id": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "elegibilidad",
+        "documento",
+        "escrito",
+        "formulario",
+        "entrevista"
+      ]
+    },
+    "nombre": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "string"
+    },
+    "obligatorio": {
+      "type": "boolean"
+    },
+    "borrador": {
+      "type": "boolean"
+    },
+    "tiempo_estimado_dias": {
+      "type": "number"
+    },
+    "url_oficial_del_requisito": {
+      "type": "string"
+    },
+    "orden": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "convocatoria_id",
+    "nombre"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

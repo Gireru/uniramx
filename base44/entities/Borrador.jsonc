@@ -1,0 +1,90 @@
+{
+  "name": "Borrador",
+  "type": "object",
+  "properties": {
+    "postulacion_id": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "carta_motivacion",
+        "ensayo",
+        "respuesta_formulario",
+        "mensaje_a_recomendador"
+      ]
+    },
+    "hechos_aportados": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "pregunta": {
+            "type": "string"
+          },
+          "respuesta": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "texto": {
+      "type": "string"
+    },
+    "version": {
+      "type": "number"
+    },
+    "criterios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "criterio": {
+            "type": "string"
+          },
+          "cumple": {
+            "type": "boolean"
+          },
+          "sugerencia": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "afirmaciones_sin_respaldo": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "borrador",
+        "en_revision",
+        "final"
+      ],
+      "default": "borrador"
+    },
+    "aprobado_por_usuario": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "postulacion_id"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

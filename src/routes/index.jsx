@@ -1,21 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getServerInfo } from "@/lib/server-fns";
+import PublicHeader from "@/components/unira/PublicHeader";
+import Hero from "@/components/unira/Hero";
+import AbiertasAhora from "@/components/unira/AbiertasAhora";
+import ImpactoYConfianza from "@/components/unira/ImpactoYConfianza";
+import Footer from "@/components/unira/Footer";
 
 export const Route = createFileRoute("/")({
-  loader: () => getServerInfo(),
-  head: () => ({ meta: [{ title: "Base44 App" }] }),
-  component: HomePage,
+  head: () => ({ meta: [{ title: "Unira: encuentra tu beca, curso o concurso" }] }),
+  component: Landing,
 });
 
-function HomePage() {
-  // Undefined for a moment while a hot reload swaps this page before its loader runs again.
-  const { renderedAt } = Route.useLoaderData() ?? {};
+function Landing() {
   return (
-    <main className="mx-auto max-w-5xl space-y-4 px-4 py-8">
-      <h1 className="text-3xl font-semibold tracking-tight">Your app starts here</h1>
-      <p className="text-muted-foreground">
-        Server-rendered at <time dateTime={renderedAt}>{renderedAt}</time>.
-      </p>
-    </main>
+    <div className="min-h-screen">
+      <PublicHeader />
+      <Hero />
+      <AbiertasAhora />
+      <ImpactoYConfianza />
+      <Footer />
+    </div>
   );
 }

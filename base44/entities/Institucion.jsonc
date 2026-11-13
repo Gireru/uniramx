@@ -1,0 +1,62 @@
+{
+  "name": "Institucion",
+  "type": "object",
+  "properties": {
+    "nombre": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "gobierno",
+        "universidad",
+        "fundacion",
+        "empresa",
+        "ong"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "green",
+        "yellow",
+        "pink"
+      ]
+    },
+    "sitio_oficial": {
+      "type": "string"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "dominio_verificado": {
+      "type": "boolean"
+    },
+    "ficticia": {
+      "type": "boolean"
+    },
+    "notas_de_confianza": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "nombre"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
