@@ -13,7 +13,7 @@ function Postulaciones() {
   useEffect(() => { base44.entities.Postulacion.list("-updated_date", 50).then((p) => setLista(p.items)); }, []);
   return (
     <div className="p-4 md:p-10 max-w-3xl">
-      <h1 className="font-serif-cond text-4xl md:text-6xl">Mis postulaciones</h1>
+      <h1 className="font-serif-cond text-3xl md:text-6xl">Mis postulaciones</h1>
       <div className="mt-6 space-y-3">
         {lista === null && [0, 1, 2].map((i) => <div key={i} className="h-24 bg-white rounded-[20px] animate-pulse" />)}
         {lista?.map((p) => <PostulacionRow key={p.id} p={p} />)}

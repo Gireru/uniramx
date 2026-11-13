@@ -55,9 +55,9 @@ function Detalle() {
       <PublicHeader />
       <main className="max-w-[1200px] mx-auto px-4 md:px-6 pb-6">
         <section className="rounded-[28px] bg-gradient-to-r from-white to-[#FBF6EC] shadow-soft overflow-hidden grid md:grid-cols-[1.2fr_1fr]">
-          <div className="p-8 md:p-12">
-            <h1 className="font-serif-cond text-4xl md:text-[64px] md:leading-[66px]">{c.titulo}</h1>
-            <div className="mt-5 inline-flex flex-wrap items-center gap-2 bg-white rounded-full shadow-soft px-3 py-2">
+          <div className="p-5 sm:p-6 md:p-12">
+            <h1 className="font-serif-cond text-3xl sm:text-4xl md:text-[64px] md:leading-[66px]">{c.titulo}</h1>
+            <div className="mt-4 md:mt-5 inline-flex flex-wrap items-center gap-2 bg-white rounded-2xl md:rounded-full shadow-soft px-3 py-2">
               <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">{TIPO[c.tipo]}</span>
               <span className="inline-flex items-center gap-1 text-sm bg-[#FBF6EC] px-3 py-1 rounded-full"><CalendarDays className="w-4 h-4" strokeWidth={1.75} /> {textoFecha(c)}</span>
               {c.demo && <span className="bg-[#FFC83D] text-xs font-bold px-3 py-1 rounded-full">Ejemplo</span>}
@@ -65,13 +65,13 @@ function Detalle() {
             </div>
             <p className="mt-4 text-[#5B6180]">{c.institucion_nombre}</p>
           </div>
-          <div className="h-56 md:h-auto relative">{c.imagen_url && <Image src={c.imagen_url} alt={c.titulo} className="absolute inset-0 w-full h-full" />}</div>
+          <div className="h-48 sm:h-56 md:h-auto relative">{c.imagen_url && <Image src={c.imagen_url} alt={c.titulo} className="absolute inset-0 w-full h-full" />}</div>
         </section>
 
-        <div className="mt-10 grid lg:grid-cols-[1fr_360px] gap-8">
-          <div className="space-y-10">
+        <div className="mt-8 md:mt-10 grid lg:grid-cols-[1fr_360px] gap-6 md:gap-8">
+          <div className="space-y-7 md:space-y-10">
             <section>
-              <h2 className="font-serif-cond text-[28px] border-l-4 border-primary pl-3">Qué incluye</h2>
+              <h2 className="font-serif-cond text-2xl md:text-[28px] border-l-4 border-primary pl-3">Qué incluye</h2>
               <ul className="mt-4 space-y-3">
                 {(c.beneficios?.length ? c.beneficios.map((b) => ({ t: b.titulo, d: b.detalle })) : [{ t: "Beneficio", d: c.monto_o_beneficio || "No lo sé, revisa la convocatoria oficial." }]).map((b) => (
                   <li key={b.t} className="flex gap-3 items-start"><CheckCircle2 className="w-9 h-9 p-1.5 rounded-full bg-[#FBF6EC] text-primary shrink-0" strokeWidth={1.75} /><div><div className="font-bold">{b.t}</div><div className="text-[#6B7084] text-sm">{b.d}</div></div></li>
@@ -79,7 +79,7 @@ function Detalle() {
               </ul>
             </section>
             <section>
-              <h2 className="font-serif-cond text-[28px] border-l-4 border-primary pl-3">Requisitos</h2>
+              <h2 className="font-serif-cond text-2xl md:text-[28px] border-l-4 border-primary pl-3">Requisitos</h2>
               <ul className="mt-4 space-y-2">
                 {reqs.map((r) => <li key={r.id} className="flex gap-3 items-center"><CheckCircle2 className="w-5 h-5 text-[#2B4BFF]" strokeWidth={1.75} /> {r.nombre}{r.borrador && <span className="text-xs text-[#6B7084]">(genérico, verifica en la oficial)</span>}</li>)}
               </ul>
@@ -91,7 +91,7 @@ function Detalle() {
               <button onClick={reportar} className="mt-3 text-xs underline text-[#5B6180] inline-flex items-center gap-1"><Flag className="w-3 h-3" /> Reportar enlace roto</button>
             </section>
           </div>
-          <aside className="lg:sticky lg:top-6 self-start bg-white rounded-[20px] shadow-soft p-6">
+          <aside className="lg:sticky lg:top-6 self-start bg-white rounded-[20px] shadow-soft p-5 md:p-6">
             <h3 className="font-bold text-lg">{po ? "Tu avance" : "Empieza tu postulación"}</h3>
             <div className="mt-3 h-2 bg-[#E8ECFF] rounded-full overflow-hidden"><div className="h-full bg-[#2B4BFF]" style={{ width: `${po?.indice_preparacion || 0}%` }} /></div>
             <p className="text-[#2B4BFF] font-bold mt-1">{po?.indice_preparacion || 0}%</p>

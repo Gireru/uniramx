@@ -47,18 +47,18 @@ function Perfil() {
   if (p === null) return <div className="p-10"><p>Aún no tienes perfil.</p><Link to="/quiz" className="mt-4 inline-flex h-12 px-6 items-center rounded-full bg-primary text-white font-bold">Haz el quiz</Link></div>;
   return (
     <div className="p-4 md:p-10 max-w-2xl">
-      <h1 className="font-serif-cond text-4xl md:text-6xl">Perfil</h1>
-      <div className="bg-white rounded-[20px] shadow-soft p-6 mt-6">
+      <h1 className="font-serif-cond text-3xl md:text-6xl">Perfil</h1>
+      <div className="bg-white rounded-[20px] shadow-soft p-5 md:p-6 mt-5 md:mt-6">
         <Fila l="Nombre">{p.nombre_preferido}</Fila><Fila l="Nivel">{p.etapa}</Fila><Fila l="Estado">{p.estado}</Fila><Fila l="Escuela">{p.tipo_escuela}</Fila>
         <Fila l="Promedio">{p.promedio}</Fila><Fila l="Intereses">{p.intereses?.join(", ")}</Fila><Fila l="Metas">{p.metas}</Fila>
         <label className="flex items-center justify-between py-3 text-sm"><span>Alertas por correo</span><Switch checked={!!p.consentimiento_alertas} onCheckedChange={alertas} /></label>
       </div>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Link to="/cv" className="h-12 px-6 rounded-full bg-[#2B4BFF] text-white font-bold flex items-center">Mi CV</Link>
-        <Link to="/quiz" className="h-12 px-6 rounded-full border-2 border-[#2B4BFF] text-[#2B4BFF] font-bold flex items-center">Rehacer quiz</Link>
-        <button onClick={exportar} className="h-12 px-6 rounded-full bg-white border border-border font-medium">Exportar mis datos</button>
-        <button onClick={borrar} className="h-12 px-6 rounded-full bg-white border border-[#B42318] text-[#B42318] font-medium">Borrar mi cuenta y datos</button>
-        <button onClick={() => logout()} className="h-12 px-6 rounded-full font-medium underline">Cerrar sesión</button>
+      <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+        <Link to="/cv" className="h-12 px-6 rounded-full bg-[#2B4BFF] text-white font-bold flex items-center justify-center w-full sm:w-auto">Mi CV</Link>
+        <Link to="/quiz" className="h-12 px-6 rounded-full border-2 border-[#2B4BFF] text-[#2B4BFF] font-bold flex items-center justify-center w-full sm:w-auto">Rehacer quiz</Link>
+        <button onClick={exportar} className="h-12 px-6 rounded-full bg-white border border-border font-medium w-full sm:w-auto">Exportar mis datos</button>
+        <button onClick={borrar} className="h-12 px-6 rounded-full bg-white border border-[#B42318] text-[#B42318] font-medium w-full sm:w-auto">Borrar mi cuenta y datos</button>
+        <button onClick={() => logout()} className="h-12 px-6 rounded-full font-medium underline w-full sm:w-auto">Cerrar sesión</button>
       </div>
     </div>
   );

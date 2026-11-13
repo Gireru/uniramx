@@ -84,10 +84,10 @@ function Quiz() {
           {p.c}
         </motion.div>
       </AnimatePresence>
-      <div className="fixed bottom-0 inset-x-0 bg-gradient-to-t from-background via-background to-transparent p-4">
-        <div className="max-w-[560px] mx-auto flex gap-3 items-center">
-          {paso > 0 && <button onClick={() => setPaso(paso - 1)} className="h-12 px-6 rounded-full border border-border bg-white font-medium">Atrás</button>}
-          <button disabled={!p.ok || guardando} onClick={() => (paso < pasos.length - 1 ? setPaso(paso + 1) : terminar())} className="flex-1 h-12 rounded-full bg-primary text-white font-bold disabled:opacity-50">
+      <div className="fixed bottom-0 inset-x-0 bg-gradient-to-t from-background via-background to-transparent px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+        <div className="max-w-[560px] mx-auto flex gap-2.5 sm:gap-3 items-center">
+          {paso > 0 && <button onClick={() => setPaso(paso - 1)} className="h-12 px-4 sm:px-6 shrink-0 rounded-full border border-border bg-white font-medium text-sm sm:text-base">Atrás</button>}
+          <button disabled={!p.ok || guardando} onClick={() => (paso < pasos.length - 1 ? setPaso(paso + 1) : terminar())} className="flex-1 min-w-0 h-12 px-3 rounded-full bg-primary text-white font-bold text-sm sm:text-base disabled:opacity-50">
             {paso < pasos.length - 1 ? "Siguiente" : isAuthenticated ? (guardando ? "Guardando…" : "Terminar") : "Crear cuenta para guardar"}
           </button>
           <MiGuia className="w-12 h-10 hidden sm:block" estado={paso === pasos.length - 1 ? "celebrando" : "reposo"} />

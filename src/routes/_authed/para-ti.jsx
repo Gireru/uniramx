@@ -58,23 +58,23 @@ function ParaTi() {
 
   return (
     <div className="p-4 md:p-10">
-      <h1 className="font-serif-cond text-4xl md:text-6xl">Para ti</h1>
-      <h2 className="font-serif-cond text-3xl mt-8">Recomendadas para ti</h2>
-      {res === null && <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{[0, 1, 2].map((i) => <div key={i} className="h-72 bg-white rounded-[20px] animate-pulse" />)}</div>}
-      <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <h1 className="font-serif-cond text-3xl md:text-6xl">Para ti</h1>
+      <h2 className="font-serif-cond text-2xl md:text-3xl mt-7 md:mt-8">Recomendadas para ti</h2>
+      {res === null && <div className="mt-4 grid gap-4 md:gap-5 sm:grid-cols-2 xl:grid-cols-3">{[0, 1, 2].map((i) => <div key={i} className="h-72 bg-white rounded-[20px] animate-pulse" />)}</div>}
+      <div className="mt-4 grid gap-4 md:gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {rec.map(({ c, m }) => (
           <ConvCard key={c.id} c={c} extra={<><span className="self-start bg-[#2B4BFF] text-white text-xs font-bold px-3 py-1 rounded-full">{m.pct}% match</span><p className="text-xs text-[#5B6180]">Afinidad con tus datos; no es la probabilidad de ser aceptado.</p><Detalle m={m} ex={expl[c.id]} /></>} />
         ))}
       </div>
       {res && rec.length === 0 && <p className="mt-4 bg-white rounded-[20px] p-6 shadow-soft">Hoy no hay convocatorias abiertas donde seas competitivo; te aviso cuando abra una.</p>}
       {crecer.length > 0 && <>
-        <h2 className="font-serif-cond text-3xl mt-10">Para crecer</h2>
-        <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <h2 className="font-serif-cond text-2xl md:text-3xl mt-8 md:mt-10">Para crecer</h2>
+        <div className="mt-4 grid gap-4 md:gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {crecer.map(({ c, m }) => <ConvCard key={c.id} c={c} extra={<p className="text-sm text-[#B54708]">Plan: {m.te_falta.length ? m.te_falta.join("; ") : "Fortalece tu perfil con actividades afines"}.</p>} />)}
         </div></>}
       {cerradas.length > 0 && (
         <details className="mt-10"><summary className="font-serif-cond text-3xl cursor-pointer">Cerradas: avísame cuando abran</summary>
-          <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-4 grid gap-4 md:gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {cerradas.map(({ c }) => <ConvCard key={c.id} c={c} extra={<button onClick={() => avisar(c)} className="text-sm text-primary font-bold text-left">Avísame cuando abra</button>} />)}
           </div></details>
       )}

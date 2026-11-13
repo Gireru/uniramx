@@ -42,11 +42,11 @@ export default function AppShell() {
           <button onClick={() => logout()} className="mt-3 underline text-[#5B6180]">Cerrar sesión</button>
         </div>
       </aside>
-      <main className="flex-1 min-w-0 pb-24 md:pb-10">
+      <main className="flex-1 min-w-0 pb-[calc(6rem+env(safe-area-inset-bottom))] md:pb-10">
         <Outlet />
         <p className="text-xs text-[#5B6180] text-center mt-10 px-4">Unira no garantiza aceptación: la decide cada institución. Tú revisas y tú envías.</p>
       </main>
-      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-border grid grid-cols-5 z-30" aria-label="Principal">
+      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-border grid grid-cols-5 z-30 pb-[env(safe-area-inset-bottom)]" aria-label="Principal">
         {MOVIL.map(({ to, label, Icon }) => (
           <Link key={to} to={to} className={`relative min-h-[56px] flex flex-col items-center justify-center text-[11px] gap-0.5 ${activo(to) ? "text-primary font-bold" : "text-[#5B6180]"}`}>
             {activo(to) && <motion.span layoutId="ind" className="absolute top-0 h-0.5 w-8 bg-primary rounded-full" />}

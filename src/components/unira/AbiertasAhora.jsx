@@ -23,7 +23,7 @@ export default function AbiertasAhora() {
 
   return (
     <section className="max-w-[1200px] mx-auto px-4 md:px-6 mt-10 md:mt-[72px]">
-      <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:justify-center md:overflow-visible md:gap-3">
         {NIVELES.map((n) => {
           const Icon = ICONOS[n.id];
           const on = nivel === n.id;
@@ -32,18 +32,18 @@ export default function AbiertasAhora() {
               key={n.id}
               onClick={() => (n.id === "padres" ? (window.location.href = "/padres") : setNivel(on ? null : n.id))}
               aria-pressed={on}
-              className={`min-h-[44px] px-5 rounded-full border-2 inline-flex items-center gap-2 font-medium transition-colors ${on ? "bg-accent border-primary text-[#C8004F]" : "bg-white border-transparent shadow-soft"}`}
+              className={`shrink-0 min-h-[44px] px-4 md:px-5 rounded-full border-2 inline-flex items-center gap-2 font-medium text-sm md:text-base transition-colors ${on ? "bg-accent border-primary text-[#C8004F]" : "bg-white border-transparent shadow-soft"}`}
             >
               <Icon className="w-5 h-5" strokeWidth={1.75} /> {n.label}
             </button>
           );
         })}
       </div>
-      <div className="mt-10 flex items-end justify-between flex-wrap gap-2">
-        <h2 className="font-serif-cond text-4xl">Abiertas ahora</h2>
-        <Link to="/explorar" className="text-[#2B4BFF] font-bold">Ver todas las oportunidades →</Link>
+      <div className="mt-8 md:mt-10 flex items-end justify-between flex-wrap gap-2">
+        <h2 className="font-serif-cond text-3xl md:text-4xl">Abiertas ahora</h2>
+        <Link to="/explorar" className="text-[#2B4BFF] font-bold text-sm md:text-base">Ver todas las oportunidades →</Link>
       </div>
-      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-5 md:mt-6 grid gap-4 md:gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {items === null && Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-72 rounded-[20px] bg-white animate-pulse" />)}
         {visibles.map((c, i) => (
           <motion.div key={c.id} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>

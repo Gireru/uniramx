@@ -36,9 +36,9 @@ export default function PublicHeader() {
         <div className="flex items-center gap-2">
           <button
             onClick={irAlPanel}
-            className="h-11 md:h-12 px-5 md:px-6 rounded-full bg-primary text-primary-foreground font-bold hover:scale-[1.03] transition-transform"
+            className="h-11 px-4 md:h-12 md:px-6 rounded-full bg-primary text-primary-foreground font-bold text-sm md:text-base hover:scale-[1.03] transition-transform"
           >
-            {isAuthenticated ? "Mi panel" : "Empieza gratis"}
+            {isAuthenticated ? "Mi panel" : <><span className="md:hidden">Empezar</span><span className="hidden md:inline">Empieza gratis</span></>}
           </button>
           <button
             type="button"
@@ -53,14 +53,14 @@ export default function PublicHeader() {
       </div>
 
       {open && (
-        <nav className="md:hidden mt-3 grid gap-1 bg-white rounded-2xl p-3 shadow-soft">
+        <nav className="md:hidden mt-3 grid gap-0.5 bg-white rounded-2xl p-2.5 shadow-soft border border-border">
           {links.map((l) => (
             <Link
               key={l.label}
               to="/explorar"
               search={l.search}
               onClick={() => setOpen(false)}
-              className="px-3 py-2.5 rounded-xl font-medium hover:bg-secondary"
+              className="px-3 py-3 rounded-xl font-medium hover:bg-secondary"
             >
               {l.label}
             </Link>
@@ -68,7 +68,7 @@ export default function PublicHeader() {
           <button
             type="button"
             onClick={() => { setOpen(false); irAMiGuia(); }}
-            className="px-3 py-2.5 rounded-xl font-medium text-left hover:bg-secondary"
+            className="px-3 py-3 rounded-xl font-medium text-left hover:bg-secondary"
           >
             Mi guía
           </button>
