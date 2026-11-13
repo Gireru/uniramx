@@ -18,6 +18,30 @@ export const explicarMatch = createServerFn({ method: "POST" })
     });
   });
 
+// Palabras clave para saber qué tipo de oportunidad busca la persona.
+const TIPO_KEYS = [
+  [/beca/, "beca"],
+  [/apoyo|apoyos|economic/, "apoyo"],
+  [/curso|taller|capacita|clase/, "curso"],
+  [/concurso|premio|competencia|hackaton/, "concurso"],
+  [/empleo|trabajo|vacante|bolsa de/, "empleo"],
+  [/pr[aá]ctica/, "practica"],
+  [/intercambio|movilidad|semestre fuera/, "intercambio"],
+];
+
+// Catálogo real de oportunidades, filtrado por lo que pide la persona.
+async function catalogoParaGuia(b44, mensaje) {
+  const texto = mensaje.toLowerCase();
+  const tipo = (TIPO_KEYS.find(([re]) => re.test(texto)) || [])[1];
+  const res = await b44.entities.Convocatoria.filter({ activa: true }, { limit: 80 });
+  const lista = res.items
+    .filter((c) => c.vigencia !== "cerrada" && (!tipo || c.tipo === tipo))
+    .sort((a, b) => (b.destacada ? 1 : 0) - (a.destacada ? 1 : 0))
+    .slice(0, 10)
+    .map((c) => ({ titulo: c.titulo, tipo: c.tipo, alcance: c.alcance, institucion: c.institucion_nombre, beneficio: c.monto_o_beneficio, fecha_limite: c.fecha_limite || c.fecha_limite_texto || null }));
+  return { tipo_buscado: tipo || null, oportunidades: lista };
+}
+
 // Chat de Mi guía: el contexto se arma en código; una sola llamada con esquema.
 export const guiaChat = createServerFn({ method: "POST" })
   .middleware([requireUser])
@@ -32,8 +56,22 @@ export const guiaChat = createServerFn({ method: "POST" })
       const tareas = await b44.entities.TareaGuia.filter({ postulacion_id: po.id }, { limit: 30 });
       ficha = { titulo: cv.titulo, institucion: cv.institucion_nombre, beneficio: cv.monto_o_beneficio, fecha_limite: cv.fecha_limite || cv.fecha_limite_texto, url_oficial: cv.url_oficial, requisitos: reqs.items.map((r) => r.nombre), tareas: tareas.items.map((t) => `${t.titulo}: ${t.estado}`), etapa: po.etapa };
     }
+    const perfiles = await b44.entities.Perfil.filter({ created_by_id: context.user.id }, { limit: 1 });
+    const p = perfiles.items[0] || {};
+    const perfil = { etapa: p.etapa, estado: p.estado, promedio: p.promedio, intereses: p.intereses, busca: p.busca };
+    const catalogo = await catalogoParaGuia(b44, data.mensaje);
     const r = await b44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Eres "Mi guía" de Unira, que acompaña postulaciones a becas, apoyos, cursos y concursos en México. Habla de tú, en español claro y breve. Reglas: nunca envías solicitudes ni pides contraseñas o datos bancarios; nunca prometes aceptación (siempre: "Tú revisas y tú envías"); solo usa la ficha dada, y si el dato no está responde exactamente "${NO_SABE}". Ficha: ${JSON.stringify(ficha)}. Historial: ${JSON.stringify(data.historial)}. Mensaje de la persona: ${data.mensaje}`,
+      prompt: `Eres "Mi guía", el acompañante de Unira (México): ayuda a jóvenes a encontrar y ganar becas, apoyos, cursos, concursos, empleos, prácticas e intercambios. Habla de tú, cálido, claro y muy breve (máximo 110 palabras, sin listas numeradas largas).
+Reglas:
+- Sí puedes conversar, orientar y recomendar oportunidades del catálogo que te doy: menciona 2 o 3 por su título real y por qué le pueden servir según su perfil.
+- Si no hay catálogo para lo que pide, ayúdale con un consejo práctico y dile que puede buscar en Explorar con otras palabras.
+- Datos concretos (montos, fechas, requisitos, trámites) SOLO si vienen en el catálogo o la ficha; si te piden uno que no está, responde exactamente "${NO_SABE}" y nada más.
+- Nunca envíes solicitudes, nunca pidas contraseñas, CURP, datos bancarios ni dinero; nunca prometas aceptación: siempre recuérdale "Tú revisas y tú envías".
+Perfil de la persona: ${JSON.stringify(perfil)}.
+Ficha de la postulación en curso: ${JSON.stringify(ficha)}.
+Catálogo de oportunidades abiertas${catalogo.tipo_buscado ? ` de tipo ${catalogo.tipo_buscado}` : ""}: ${JSON.stringify(catalogo.oportunidades)}.
+Historial: ${JSON.stringify(data.historial)}.
+Mensaje de la persona: ${data.mensaje}`,
       response_json_schema: { type: "object", properties: { respuesta: { type: "string" }, accion_sugerida: { type: "string", enum: ["mejorar_carta", "subir_documento", "ver_requisito", "ninguna"] }, nivel_confianza: { type: "string", enum: ["alto", "medio", "bajo"] } } },
     });
     return { ...r, url_oficial: ficha?.url_oficial || null };

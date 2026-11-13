@@ -13,7 +13,12 @@ export const Route = createFileRoute("/_authed/guia")({
 function Guia() {
   const { postulacion } = Route.useSearch();
   const chat = useServerFn(guiaChat);
-  const [msgs, setMsgs] = useState([{ rol: "guia", texto: "Hola, soy tu guía. Te acompaño en toda la postulación. Tú revisas y tú envías. ¿En qué te ayudo?" }]);
+  const [msgs, setMsgs] = useState([{
+    rol: "guia",
+    texto: postulacion
+      ? "Hola, soy tu guía. Te acompaño en toda esta postulación. Tú revisas y tú envías. ¿En qué te ayudo?"
+      : "Hola, soy tu guía. Puedo buscarte becas, cursos, empleos, prácticas o intercambios, y ayudarte a preparar una postulación. ¿Qué te gustaría encontrar?",
+  }]);
   const [t, setT] = useState("");
   const [cargando, setCargando] = useState(false);
 
